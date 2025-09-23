@@ -1,18 +1,23 @@
 const express=require('express');
+const mongoose=require('mongoose')
 const app=express();
-const {AdminAuth,UserAuth}=require('./Middleware/Auth')
 
 
-app.get("/admin/dashboard",AdminAuth,(req,res)=>{
-    res.send("welcome to Admin Dashboard");
-})
-app.get("/user/signin",(req,res)=>{
-    res.send("Buddy You are in Right way")
-})
 
-app.get("user/profile",UserAuth,(req,res)=>{
-    res.send('working Successfully');
-})
-app.listen(7777,()=>{
-    console.log("App Is listening on port 7777");
-})
+const response=async()=>{
+    const iniatializeDb = await mongoose.connect(
+      "mongodb+srv://VishnuDev:srxR3fYnjuS0h23e@vishnudev.7g1lbox.mongodb.net/devTinder"
+    );
+    if(iniatializeDb!==undefined){
+        console.log("DB is Intialized")
+        app.listen(7777,()=>{
+            console.log("Port is Listening in the server")
+        })
+    }else{
+        console.log("Err is Occured")
+    }
+
+
+}
+
+response()

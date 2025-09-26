@@ -1,7 +1,7 @@
 const express=require('express')
 const app=express()
 const mongoose=require('mongoose')
-
+app.use(express.json())
 const DBConnection=async()=>{
     try{
         await mongoose.connect("mongodb+srv://VishnuDev:srxR3fYnjuS0h23e@vishnudev.7g1lbox.mongodb.net/devTinder");
@@ -27,12 +27,9 @@ const User=mongoose.model("User",UserSchema)
 
 
 app.post("/signin",async(req,res)=>{
-    const Userdetails=User({
-        firstname:"Vishnu",
-        lastname:"Yadav",
-        age:21,
-        city:"Tirupathi"
-    })
+    const data=req.body
+    const Userdetails=new User(data)
+    console.log(Userdetails)
     try{
         await(Userdetails.save())
         console.log("User is Created Successfully")
